@@ -1,4 +1,4 @@
-%reset -f
+#%reset -f
 
 # Import Dependencies
 import pandas as pd
@@ -6,8 +6,8 @@ import numpy as np
 from fpdf import FPDF
 
 # Reading input files
-path = r'C:\Desktop\Football Clubs\England\Premier League'
-Input_path = path+"\Arsenal.xlsx"
+#path = r'C:\Desktop\Football Clubs\England\Premier League'
+Input_path = "Arsenal.xlsx"
 df = pd.read_excel(Input_path, sheet_name='Data')
 
 # Creating variables
@@ -23,15 +23,15 @@ gaffer = df['Current Manager'].iloc[0]
 pdf = FPDF() # Initializing object
 pdf.add_page() # Adding new page
 
-pdf.image(path + '/Football_field.svg.png',x=0,y=0,w=210,h=300) # Background wallpaper
-pdf.image(path + '/premier-league_logo.jpg', x=188, y=0, w=18)  # Top Right corner logo 
+pdf.image('Football_field.svg.png',x=0,y=0,w=210,h=300) # Background wallpaper
+#pdf.image('premier-league_logo.jpg', x=188, y=0, w=18)  # Top Right corner logo 
 
 # Title of Document
 pdf.set_fill_color(200,0,0)
 pdf.set_text_color(255,255,255)
 pdf.set_font("Arial", size=30, style='B')
 pdf.set_xy(10,32)
-pdf.cell(0, 12.5, txt='ARSENAL FC', ln=1, align="C" , fill = True)
+pdf.cell(0, 12.5, txt='ARSENAL FC', border=1 , ln=1, align="C" , fill = True)
 
 # Text box of header
 pdf.set_fill_color(0,0,150)
@@ -44,7 +44,7 @@ pdf.cell(55, 10, txt='CLUB HISTORY', ln=1, align="L",fill=True)
 pdf.set_text_color(0,0,0)
 pdf.set_font("Arial", size=9, style="B")
 pdf.set_xy(12,76)
-pdf.multi_cell(120, 5, txt= history, ln=1, align="J")
+pdf.multi_cell(120, 5, txt= history, align="J")
 
 # Text box of header
 pdf.set_fill_color(0,0,150)
@@ -57,10 +57,10 @@ pdf.cell(65, 10, txt='TROPHY CABINET', ln=1, align="L",fill=True)
 pdf.set_text_color(0,0,0)
 pdf.set_font("Arial", size=9, style="B")
 pdf.set_xy(12,165)
-pdf.multi_cell(180, 5, txt= cabinet, ln=1, align="J")
+pdf.multi_cell(180, 5, txt= cabinet, align="J")
 
 # Club's Crest Image
-pdf.image(path + '/arsenal_logo.jpg', x=124, y=58, w=80)
+#pdf.image('arsenal_logo.jpg', x=124, y=58, w=80)
 
 # Club's Latin Motto 
 pdf.set_text_color(220,220,220)
@@ -83,7 +83,7 @@ pdf.cell(130, 10, txt= gaffer, ln=1, align="L")
 
 
 # Inserting stadium Picture
-pdf.image(path + '/Emirates.jpg', x=10, y=184,w=190)
+pdf.image('Emirates.jpg', x=10, y=184,w=190)
 
 # Stadium Name Text Box
 pdf.set_fill_color(255,0,0)
@@ -93,4 +93,4 @@ pdf.set_xy(150,260)
 pdf.cell(47,8, txt= ground, ln=1, align="L" ,fill=True) 
 
 # Exporting PDF
-pdf.output(path +"/ArsenalFC.pdf") 
+pdf.output("ArsenalFC.pdf") 
