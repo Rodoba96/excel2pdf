@@ -1,4 +1,6 @@
 from fpdf import FPDF
+from fpdf.enums import XPos, YPos
+
 
 class PDF(FPDF):
     def header(self):
@@ -20,7 +22,8 @@ class PDF(FPDF):
         # Arial italic 8
         self.set_font('Arial', 'I', 8)
         # Page number
-        self.cell(w=0, h=10, txt='Page ' + str(self.page_no()) + '/{nb}', border=1, ln=0, center='C')
+        #self.cell(w=0, h=10, txt='Page ' + str(self.page_no()) + '/{nb}', border=1, ln=0, center='C')
+        self.cell(w=0, h=10, txt='Page' + str(self.page_no()) + '/{nb}', border=1, new_x=XPos.RIGHT, new_y=YPos.NEXT, center="C")
 
 # Instantiation of inherited class
 pdf = PDF()
