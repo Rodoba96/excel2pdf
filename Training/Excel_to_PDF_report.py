@@ -9,13 +9,15 @@ from fpdf import FPDF
 #path = r'C:\Desktop\Football Clubs\England\Premier League'
 Input_path = "Arsenal.xlsx"
 df = pd.read_excel(Input_path, sheet_name='Data')
+#print(df)
 
 # Creating variables
 nickname = df['Nickname'].iloc[0]
 history = df['History'].iloc[0]
 cabinet = df['Cabinet'].iloc[0]
 ground = df['Stadium'].iloc[0]
-motto = df['Club Motto'].iloc[0]
+#motto = df['Club Motto'].iloc[0]
+motto = df["Current Manager"].iloc[0]
 establishment = str(df['Founded in'].iloc[0])
 gaffer = df['Current Manager'].iloc[0]
 
