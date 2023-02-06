@@ -118,7 +118,11 @@ class PDF(FPDF):
         self.cell(0, 6, 'Año: %d' % (year), 0, 1, 'L', 1)
         # Line break
         self.ln(0)
-    
+
+    def nacimiento_image(self):
+        self.ln(6)
+        self.cell(0, 190,'', 1,1)
+        self.ln(0)    
 
     def print_nacimiento(self, num, pais, ciudad, descripcion, material, regalo, piezas, year):
         self.add_page()
@@ -130,10 +134,11 @@ class PDF(FPDF):
         self.nacimiento_regalo(regalo)
         self.nacimiento_piezas(piezas)
         self.nacimiento_year(year)
+        self.nacimiento_image()
 
 pdf = PDF()
 pdf.set_title(title)
-pdf.print_nacimiento(1, 'México', 'CDMX', '1er . Nacimiento.', 'Pasta', 'Tía Silvia', 15, 1990 )
+pdf.print_nacimiento(1, 'México', 'CDMX', '1er . Nacimiento.', 'Pasta', 'Tía Silvia', 15, 1990)
 pdf.print_nacimiento(2, 'México', 'Apaseo el Grande, GTO.', '', 'Tallado de madera', '', 10, 1995)
 pdf.print_nacimiento(3, 'México', '', 'Nacimiento grande de Costco', 'Porcelana', '', 3, 1998)
 pdf.output('tuto3.pdf', 'F')
