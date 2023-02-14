@@ -105,7 +105,7 @@ class PDF(FPDF):
         # Background color
         self.set_fill_color(200, 220, 255)
         # Title
-        self.cell(0, 6, 'Piezas: %d' % (piezas), 0, 1, 'L', 1)
+        self.cell(0, 6, 'Piezas: %s' % (piezas), 0, 1, 'L', 1)
         # Line break
         self.ln(0)
 
@@ -136,10 +136,29 @@ class PDF(FPDF):
         self.nacimiento_year(year)
         self.nacimiento_image()
 
+# Reading input files
+Input_path = "CatalogoNAC_02.xlsx"
+df = pd.read_excel(Input_path, sheet_name='Inventario')
+
+# Creating variables
+number_s = pd.Series(df["Num."])
+country_s = pd.Series(df["Pais"])
+city_s = pd.Series(df["Ciudad"])
+description_s = pd.Series(df["Descripcion"])
+material_s = pd.Series(df["Material"])
+gift_s = pd.Series(df["Regalo de:"])
+pieces_s = pd.Series(df["Piezas"])
+year_s = pd.Series(df["Ano"])
+
+# PDF creation
 pdf = PDF()
 pdf.set_title(title)
-pdf.print_nacimiento(1, 'México', 'CDMX', '1er . Nacimiento.', 'Pasta', 'Tía Silvia', 15, 1990)
-pdf.print_nacimiento(2, 'México', 'Apaseo el Grande, GTO.', '', 'Tallado de madera', '', 10, 1995)
-pdf.print_nacimiento(3, 'México', '', 'Nacimiento grande de Costco', 'Porcelana', '', 3, 1998)
+
+# Obtaining data
+for n in range(10):
+    print(number_s.iloc[n])
+    pdf.print_nacimiento(number_s.iloc[n], country_s.iloc[n], city_s.iloc[n], description_s.iloc[n], material_s.iloc[n], gift_s.iloc[n], pieces_s.iloc[n], year_s.iloc[n])
+
+# Exporting PDF
 pdf.output('tuto3.pdf', 'F')
 
