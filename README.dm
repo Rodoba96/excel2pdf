@@ -1,1 +1,1 @@
-This is the proyect to tunr an excel file into a PDF
+This is the proyect to turn an excel file into a PDF
