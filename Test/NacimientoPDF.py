@@ -2,6 +2,7 @@
 import pandas as pd
 import numpy as np
 from fpdf import FPDF
+from PIL import Image
 import unicodedata
 
 # Reading input files
@@ -119,10 +120,18 @@ class PDF(FPDF):
         # Line break
         self.ln(0)
 
-    def nacimiento_image(self):
+    def nacimiento_image(self, num):
         self.ln(6)
-        self.cell(0, 190,'', 1,1)
-        self.ln(0)    
+        img = Image.open('images/Nac_%d.png' % (num))
+        img_width = img.width
+        img_height = img.height
+
+        if img_width >= img_height:
+            pdf.image(img, w=190)
+        elif img_width < img_height:  
+            pdf.image(img, h=190)
+        
+            self.ln(0)    
 
     def print_nacimiento(self, num, pais, ciudad, descripcion, material, regalo, piezas, year):
         self.add_page()
@@ -134,7 +143,7 @@ class PDF(FPDF):
         self.nacimiento_regalo(regalo)
         self.nacimiento_piezas(piezas)
         self.nacimiento_year(year)
-        self.nacimiento_image()
+        self.nacimiento_image(num)
 
 # Reading input files
 Input_path = "CatalogoNAC.xlsx"
@@ -155,10 +164,11 @@ pdf = PDF()
 pdf.set_title(title)
 
 # Obtaining data
-for n in range(number_s.size):
+# for n in range(number_s.size):
+for n in range(1):
     #print(number_s.iloc[n])
     pdf.print_nacimiento(number_s.iloc[n], country_s.iloc[n], city_s.iloc[n], description_s.iloc[n], material_s.iloc[n], gift_s.iloc[n], pieces_s.iloc[n], year_s.iloc[n])
 
 # Exporting PDF
-pdf.output('tuto3.pdf', 'F')
+pdf.output('tuto4.pdf', 'F')
 
