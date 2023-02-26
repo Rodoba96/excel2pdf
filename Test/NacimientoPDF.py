@@ -4,6 +4,8 @@ import numpy as np
 from fpdf import FPDF
 from PIL import Image
 import unicodedata
+import os.path
+import sys
 
 # Reading input files
 # Input_path = "CatalogoNAC_02.xlsx"
@@ -122,17 +124,21 @@ class PDF(FPDF):
 
     def nacimiento_image(self, num):
         self.ln(6)
-        img = Image.open('images/Nac_%d.png' % (num))
-        img_width = img.width
-        img_height = img.height
+        img = 'images/Nac_%d.jpg' % (num)
 
-        if img_width >= img_height:
-            pdf.image(img, w=190)
-        elif img_width < img_height:  
-            pdf.image(img, h=190)
+        if os.path.exists(img):    
+            img = Image.open('images/Nac_%d.jpg' % (num))
+            img_width = img.width
+            img_height = img.height
+
+            if img_width >= img_height:
+                pdf.image(img, w=190)
+            elif img_width < img_height:  
+                pdf.image(img, h=190)
+                self.ln(0)    
+        else:
+            print('File << %s >> doesnt exists' % (img))
         
-            self.ln(0)    
-
     def print_nacimiento(self, num, pais, ciudad, descripcion, material, regalo, piezas, year):
         self.add_page()
         self.nacimiento_num(num)
@@ -147,7 +153,11 @@ class PDF(FPDF):
 
 # Reading input files
 Input_path = "CatalogoNAC.xlsx"
-df         = pd.read_excel(Input_path, sheet_name='Inventario')
+
+if os.path.exists(Input_path):    
+    df = pd.read_excel(Input_path, sheet_name='Inventario')
+else:
+    sys.exit('File << %s >> doesnt exists' % (Input_path))
 
 # Creating variables
 number_s      = pd.Series(df["Núm."])
@@ -165,10 +175,10 @@ pdf.set_title(title)
 
 # Obtaining data
 # for n in range(number_s.size):
-for n in range(1):
+for n in range(2):
     #print(number_s.iloc[n])
     pdf.print_nacimiento(number_s.iloc[n], country_s.iloc[n], city_s.iloc[n], description_s.iloc[n], material_s.iloc[n], gift_s.iloc[n], pieces_s.iloc[n], year_s.iloc[n])
 
 # Exporting PDF
-pdf.output('tuto4.pdf', 'F')
+pdf.output('tuto5.pdf', 'F')
 
